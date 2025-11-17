@@ -1,0 +1,19 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.cache
+*.log
+ 
+# Build
+bin/
+obj/
+Debug/
+Release/
+ 
+# Others
+*.db
+*.DS_Store
+ 
+# Docker
+**/docker-compose.override.yml

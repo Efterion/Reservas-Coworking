@@ -32,6 +32,14 @@ public class ReservasController : ControllerBase
         return Ok(reservas);
     }
 
+    [HttpGet("espacio/{espacioid:guid}")]
+    [Authorize]
+    public async Task<IActionResult> GetByEspacio(Guid espacioid)
+    {
+        var reservas = await _service.GetByEspacioAsync(espacioid);
+        return Ok(reservas);
+    }
+
     [HttpPost]
     public async Task<IActionResult> Create(ReservaDto dto)
     {

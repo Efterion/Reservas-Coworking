@@ -51,12 +51,11 @@ public class ReservaService
     public async Task<Reserva> ConfirmarReservaAsync(Guid id)
     {
         var reserva = await _context.Reservas.FindAsync(id);
+
         if (reserva == null)
-        
             throw new Exception("La reserva no existe.");
 
         if (reserva.Estado != EstadoReserva.Pendiente)
-        
             throw new Exception("Solo se pueden confirmar reservas pendientes.");
         
         reserva.Estado = EstadoReserva.Confirmada;
@@ -72,6 +71,14 @@ public class ReservaService
         return await _context.Reservas
             .Where(r => r.UsuarioDNI == dni)
             .Include(r => r.Espacio)
+            .ToListAsync();
+    }
+
+    public async Task<IEnumerable<Reserva>> GetByEspacioAsync(Guid espacioId)
+    {
+        return await _context.Reservas
+            .Where(r => r.EspacioId == espacioId)
+            .Include(r => r.Usuario)
             .ToListAsync();
     }
 

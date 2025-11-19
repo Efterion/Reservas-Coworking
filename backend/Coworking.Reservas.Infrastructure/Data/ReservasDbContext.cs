@@ -22,9 +22,21 @@ public class ReservasDbContext : DbContext
         modelBuilder.Entity<Usuario>(entity =>
         {
             entity.ToTable("Usuarios");
-            entity.HasKey(u => u.Id);
-            entity.Property(u => u.Nombre).HasMaxLength(100).IsRequired();
-            entity.Property(u => u.Email).HasMaxLength(200).IsRequired();
+
+            entity.HasKey(u => u.DNI);
+
+            entity.Property(u => u.DNI)
+                  .HasMaxLength(20)
+                  .IsRequired();
+
+            entity.Property(u => u.Nombre)
+                  .HasMaxLength(100)
+                  .IsRequired();
+
+            entity.Property(u => u.Email)
+                  .HasMaxLength(200)
+                  .IsRequired();
+
             entity.HasIndex(u => u.Email).IsUnique();
         });
 
@@ -40,17 +52,18 @@ public class ReservasDbContext : DbContext
         modelBuilder.Entity<Reserva>(entity =>
         {
             entity.ToTable("Reservas");
+
             entity.HasKey(r => r.Id);
 
-            entity
-                .HasOne(r => r.Usuario)
-                .WithMany(u => u.Reservas)
-                .HasForeignKey(r => r.UsuarioId);
+            entity.HasOne(r => r.Usuario)
+                  .WithMany(u => u.Reservas)
+                  .HasForeignKey(r => r.UsuarioDNI)
+                  .OnDelete(DeleteBehavior.Cascade);
 
-            entity
-                .HasOne(r => r.Espacio)
-                .WithMany(e => e.Reservas)
-                .HasForeignKey(r => r.EspacioId);
+            entity.HasOne(r => r.Espacio)
+                  .WithMany(e => e.Reservas)
+                  .HasForeignKey(r => r.EspacioId)
+                  .OnDelete(DeleteBehavior.Cascade);
         });
     }
 }

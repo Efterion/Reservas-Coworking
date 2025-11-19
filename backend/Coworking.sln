@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36705.20
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reservas.Api", "Reservas.Api\Reservas.Api.csproj", "{0F6EA194-3DC7-4E7A-9CC8-C9BAEC825091}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coworking.Reservas.Domain", "Coworking.Reservas.Domain\Coworking.Reservas.Domain.csproj", "{56B90530-994A-45EF-B02D-9388001D1FD4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coworking.Reservas.Infrastructure", "Coworking.Reservas.Infrastructure\Coworking.Reservas.Infrastructure.csproj", "{602B9D63-9359-443C-A7A6-68448C8498D3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coworking.Reservas.Api", "Coworking.Reservas.Api\Coworking.Reservas.Api.csproj", "{413A1D68-4B45-2C7B-79DE-6D46875DA0EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +15,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0F6EA194-3DC7-4E7A-9CC8-C9BAEC825091}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0F6EA194-3DC7-4E7A-9CC8-C9BAEC825091}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0F6EA194-3DC7-4E7A-9CC8-C9BAEC825091}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0F6EA194-3DC7-4E7A-9CC8-C9BAEC825091}.Release|Any CPU.Build.0 = Release|Any CPU
 		{56B90530-994A-45EF-B02D-9388001D1FD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{56B90530-994A-45EF-B02D-9388001D1FD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{56B90530-994A-45EF-B02D-9388001D1FD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -27,6 +23,10 @@ Global
 		{602B9D63-9359-443C-A7A6-68448C8498D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{602B9D63-9359-443C-A7A6-68448C8498D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{602B9D63-9359-443C-A7A6-68448C8498D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{413A1D68-4B45-2C7B-79DE-6D46875DA0EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{413A1D68-4B45-2C7B-79DE-6D46875DA0EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{413A1D68-4B45-2C7B-79DE-6D46875DA0EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{413A1D68-4B45-2C7B-79DE-6D46875DA0EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

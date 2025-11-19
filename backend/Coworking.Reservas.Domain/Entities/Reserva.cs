@@ -5,7 +5,8 @@ namespace Coworking.Reservas.Domain.Entities;
 public class Reserva
 {
     public Guid Id { get; set; }
-    public Guid UsuarioId { get; set; }
+
+    public string UsuarioDNI { get; set; } = string.Empty; // FK
     public Guid EspacioId { get; set; }
 
     public DateTime FechaInicio { get; set; }

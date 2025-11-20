@@ -10,10 +10,13 @@ namespace Coworking.Reservas.Api.Services;
 public class ReservaService
 {
     private readonly ReservasDbContext _context;
+    private readonly KafkaProducerService _kafka;
 
-    public ReservaService(ReservasDbContext context)
+    //constructor válido
+    public ReservaService(ReservasDbContext context, KafkaProducerService kafka)
     {
         _context = context;
+        _kafka = kafka;
     }
 
     public async Task<IEnumerable<Reserva>> GetAll()
@@ -27,10 +30,10 @@ public class ReservaService
     public async Task<bool> TieneSolapamiento(Guid espacioId, DateTime inicio, DateTime fin)
     {
         return await _context.Reservas.AnyAsync(r =>
-                r.EspacioId == espacioId &&
-                r.Estado != EstadoReserva.Cancelada &&
-                inicio < r.FechaFin && 
-                fin > r.FechaInicio
+            r.EspacioId == espacioId &&
+            r.Estado != EstadoReserva.Cancelada &&
+            inicio < r.FechaFin &&
+            fin > r.FechaInicio
         );
     }
 
@@ -48,8 +51,7 @@ public class ReservaService
         _context.Reservas.Add(reserva);
         await _context.SaveChangesAsync();
 
-        //Crear evento kafka
-
+        // Crear evento Kafka
         var evento = new ReservaCreadaEvent
         {
             ReservaId = reserva.Id,
@@ -60,8 +62,8 @@ public class ReservaService
             FechaCreacion = reserva.FechaCreacion
         };
 
-        //Publicar Kafka
-        await _kafka.PublishAsync("reservas.creadas", evento);
+        // Publicar en Kafka
+        await _kafka.SendAsync("Reservas.Creadas", evento);
 
         return reserva;
     }
@@ -75,13 +77,12 @@ public class ReservaService
 
         if (reserva.Estado != EstadoReserva.Pendiente)
             throw new Exception("Solo se pueden confirmar reservas pendientes.");
-        
+
         reserva.Estado = EstadoReserva.Confirmada;
         reserva.FechaActualizacion = DateTime.UtcNow;
 
-        await _context.SaveChangesAsync(); 
+        await _context.SaveChangesAsync();
         return reserva;
-
     }
 
     public async Task<IEnumerable<Reserva>> GetByUsuarioAsync(string dni)
@@ -113,15 +114,7 @@ public class ReservaService
         reserva.Estado = EstadoReserva.Finalizada;
         reserva.FechaActualizacion = DateTime.UtcNow;
 
-        await _context.SaveChangesAsync(); 
+        await _context.SaveChangesAsync();
         return reserva;
-    }
-
-    private readonly KafkaProducerService _kafka;
-
-    public ReservaService(ReservasDbContext context, KafkaProducerService kafka)
-    {
-        _kafka = kafka;
-        _context = context;
     }
 }

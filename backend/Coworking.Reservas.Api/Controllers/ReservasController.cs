@@ -41,7 +41,7 @@ public class ReservasController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(ReservaDto dto)
+    public async Task<IActionResult> Create([FromBody]ReservaDto dto)
     {
         try
         {

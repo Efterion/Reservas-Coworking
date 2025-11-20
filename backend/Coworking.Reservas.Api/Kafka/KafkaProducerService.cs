@@ -2,6 +2,7 @@
 using System.Text.Json;
 
 namespace Coworking.Reservas.Api.Kafka;
+
 public class KafkaProducerService
 {
     private readonly IProducer<string, string> _producer;
@@ -10,15 +11,17 @@ public class KafkaProducerService
     {
         var config = new ProducerConfig
         {
-            BootstrapServers = configuration["Kafka:BootstrapServers"] ?? "localhost:9092",
+            //usamos el hostname de Docker, no localhost
+            BootstrapServers = configuration["Kafka:BootstrapServers"] ?? "kafka:9092",
         };
 
         _producer = new ProducerBuilder<string, string>(config).Build();
     }
-    public async Task PublishAsync(string topic, object message)
+
+    public async Task SendAsync(string topic, object message)
     {
         var json = JsonSerializer.Serialize(message);
-        
+
         await _producer.ProduceAsync(topic, new Message<string, string>
         {
             Key = Guid.NewGuid().ToString(),

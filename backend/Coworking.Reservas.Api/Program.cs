@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Coworking.Reservas.Api.Auth;
 using System.Text.Json.Serialization;
+using Coworking.Reservas.Api.Kafka;
 
 
 var builder = WebApplication.CreateBuilder(args);

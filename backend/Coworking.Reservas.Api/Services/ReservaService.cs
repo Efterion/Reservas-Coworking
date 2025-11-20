@@ -56,12 +56,12 @@ public class ReservaService
             UsuarioDNI = reserva.UsuarioDNI,
             EspacioId = reserva.EspacioId,
             FechaInicio = reserva.FechaInicio,
-            FechaFin = Reserva.FechaFin,
+            FechaFin = reserva.FechaFin,
             FechaCreacion = reserva.FechaCreacion
         };
 
         //Publicar Kafka
-        await _kafka.ProduceAsync("reservas.creadas", evento);
+        await _kafka.PublishAsync("reservas.creadas", evento);
 
         return reserva;
     }

@@ -2,6 +2,8 @@
 using Coworking.Reservas.Domain.Enums;
 using Coworking.Reservas.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using Coworking.Reservas.Domain.Events;
+using Coworking.Reservas.Api.Kafka;
 
 namespace Coworking.Reservas.Api.Services;
 
@@ -45,6 +47,22 @@ public class ReservaService
 
         _context.Reservas.Add(reserva);
         await _context.SaveChangesAsync();
+
+        //Crear evento kafka
+
+        var evento = new ReservaCreadaEvent
+        {
+            ReservaId = reserva.Id,
+            UsuarioDNI = reserva.UsuarioDNI,
+            EspacioId = reserva.EspacioId,
+            FechaInicio = reserva.FechaInicio,
+            FechaFin = Reserva.FechaFin,
+            FechaCreacion = reserva.FechaCreacion
+        };
+
+        //Publicar Kafka
+        await _kafka.ProduceAsync("reservas.creadas", evento);
+
         return reserva;
     }
 
@@ -97,5 +115,13 @@ public class ReservaService
 
         await _context.SaveChangesAsync(); 
         return reserva;
+    }
+
+    private readonly KafkaProducerService _kafka;
+
+    public ReservaService(ReservasDbContext context, KafkaProducerService kafka)
+    {
+        _kafka = kafka;
+        _context = context;
     }
 }

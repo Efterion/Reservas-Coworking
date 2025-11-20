@@ -21,9 +21,11 @@ builder.Services.AddControllers()
 builder.Services.AddScoped<UsuarioService>();
 builder.Services.AddScoped<EspacioService>();
 builder.Services.AddScoped<ReservaService>();
+builder.Services.AddScoped<KafkaProducerService>();
 
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<TokenService>();
+
 
 //Configuracin de autenticacin JWT
 
